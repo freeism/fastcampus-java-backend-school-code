@@ -10,7 +10,7 @@ import lombok.Builder;
  */
 @Builder
 @AllArgsConstructor
-public class ToDo {
+public class Todo {
     Long id;
     String title;
     String description;

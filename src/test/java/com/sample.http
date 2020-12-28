@@ -1,0 +1,8 @@
+GET http://localhost:8070/hello-world
+
+###
+
+POST http://localhost:8070/api/user
+Content-Type: application/json
+
+< ./sample.json

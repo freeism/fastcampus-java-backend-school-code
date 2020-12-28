@@ -1,17 +1,18 @@
 package com.fastcampus.todo.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Martin
  * @since 2020/12/22
  */
+@Data
 @AllArgsConstructor
-@Getter
-@ToString
+@NoArgsConstructor
 public class User {
+    private Long id;
     private String name;
     private String email;
 }
