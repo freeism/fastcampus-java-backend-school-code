@@ -45,7 +45,7 @@ public class TodoController {
     }
 
     @PutMapping("/api/todo/{id}")
-    public void put(@RequestBody TodoDto dto) {
+    public void put(@PathVariable Long id, @RequestBody TodoDto dto) {
         System.out.println(">>> " + dto);
         ////
 
