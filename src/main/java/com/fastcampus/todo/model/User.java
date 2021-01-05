@@ -22,8 +22,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)     // auto increment
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "email")
     private String email;
     private String address;
     private String password;
