@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
  * @author Martin
  * @since 2020/12/21
  */
-@WebMvcTest
+@WebMvcTest(controllers = HelloWorldController.class)
 class HelloWorldControllerTest {
     @Autowired
     private MockMvc mockMvc;

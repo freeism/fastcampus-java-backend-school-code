@@ -54,5 +54,8 @@ class UserControllerTest {
                     objectMapper.writeValueAsString(
                         new UserDto("martin", "martin@fastcampus.com", "seoul", "password"))))
             .andExpect(status().isOk());
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/user/3"))
+            .andExpect(status().isOk());
     }
 }

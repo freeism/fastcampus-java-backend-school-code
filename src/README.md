@@ -20,3 +20,26 @@ Atomicity : 원자성 -> 부분성공이 있으면 안됨 (송금 -> 내 통장 
 Consistency : 일관성 -> DB에 있는 contraint조건들 다 만족시킴(송금했는데 성공, 내 통장 -50000)
 Isolation : 독립성 -> 데이터조작에 자유로워야함 (송금하고 있는중에, 상대방 돈 빼감)
 Durability : 지속성 -> 데이터가 영구적 보관 (송금했고, 성공했음 -> 다음날 돈x)
+
+# 1/6
+mvn : compile testCompile
+gradle : 
+    compileJava : com.fastcampus.todo.controller.HelloWorldController.class
+    compileTestJava : com.fastcampus.todo.controller.HelloWorldController.class, HelloWorldControllerTest.class
+
+@MockBean
+- 선언된 클래스를 Mock으로 만들어서, Bean으로 올려줌
+
+@Bean vs @Component
+- @Component : class scope
+- @Bean : method scope
+
+Lock
+- 배타적 독점권한
+- Tomcat - request serving -> thread
+- DB - request serving -> connection 
+- tx1 : A, B, C
+- tx2 : C, D, A
+- 교착상태 (DeadLock)
+
+
