@@ -12,6 +12,8 @@ import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 /**
@@ -22,6 +24,7 @@ import lombok.ToString;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)     // auto increment
@@ -30,6 +33,7 @@ public class User {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @NonNull
     @Column(name = "email")
     private String email;
     private String address;
