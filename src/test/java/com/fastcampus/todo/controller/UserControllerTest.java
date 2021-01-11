@@ -1,5 +1,6 @@
 package com.fastcampus.todo.controller;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -16,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 /**
  * @author Martin
@@ -32,6 +34,7 @@ class UserControllerTest {
     void before(WebApplicationContext wac) {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac)
             .alwaysDo(print())
+            .addFilters(new CharacterEncodingFilter("UTF-8", true))
             .build();
     }
 
@@ -45,14 +48,31 @@ class UserControllerTest {
             .andExpect(jsonPath("$.email").value("martin@fastcampus.com"));
     }
 
+    @Test
+    void getUserByEmail() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/user?email=martin@fastcampus.com"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$", hasSize(1)))
+            .andExpect(jsonPath("$.[0].id").value(1L))
+            .andExpect(jsonPath("$.[0].name").value("martin"))
+            .andExpect(jsonPath("$.[0].email").value("martin@fastcampus.com"));
+    }
+
+    @Test
+    void getUserByEmailIfThrown() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/user?email="))
+            .andExpect(status().isBadRequest());
+    }
+
     @DisplayName("Post유저")
     @Test
+
     void postUser() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/user")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(
-                    objectMapper.writeValueAsString(
-                        new UserDto("martin", "martin@fastcampus.com", "seoul", "password"))))
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(
+                objectMapper.writeValueAsString(
+                    new UserDto("martin", "martin@fastcampus.com", "seoul", "password"))))
             .andExpect(status().isOk());
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/user/3"))

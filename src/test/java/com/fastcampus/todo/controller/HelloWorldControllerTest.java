@@ -30,4 +30,11 @@ class HelloWorldControllerTest {
             .andExpect(status().isOk())
             .andExpect(content().string("hello-world"));
     }
+
+    @Test
+    void helloException() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/hello-exception"))
+            .andDo(print())
+            .andExpect(status().isInternalServerError());
+    }
 }

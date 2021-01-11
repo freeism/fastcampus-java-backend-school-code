@@ -95,4 +95,21 @@ class UserServiceTest {
             return argument != null && "A".equals(argument.getBloodType());
         }
     }
+
+    @Test
+    void finallyTest() {
+        String message = "";
+        String response = "";
+
+        try {
+            message = "성공입니다";
+            throw new RuntimeException();
+        } catch (RuntimeException ex) {
+            message = "실패입니다";
+        } finally {     // -> 할당(x), 자원을 닫거나, 정리하는 작업
+            message = "???";
+        }
+
+        System.out.println(message);
+    }
 }

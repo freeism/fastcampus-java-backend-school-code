@@ -108,3 +108,113 @@ Service <- ?????? 스펙정의가 필요
 
 // 아까 any 안에 온 User.class의미가 User인가요 ? 
 extends User 인가요 2.self-validation의미 한번만 말해주세요
+
+
+
+// UML <- Entity 설계
+http://www.yes24.com/Product/Goods/4492519
+
+```java
+class User {
+    @OneToMany
+    List<Todo> todos;
+}
+
+class UserService {
+    @Transactional
+    public User getUser(Long userId) {
+        return userRepository.findById(userId);
+    }
+}
+
+class UserController {
+    public List<Todo> getTodos(Long userId) {
+        return userService.getUser(userId).getTodos();
+    }
+}
+```
+
+예외처리 (Exception)
+- 오류 -> 실제로 런닝하는 시스템에서 별개로 처리하고 싶은 것
+- Throwable
+    - Error
+        - 시스템에 대한 오류 (JVM)
+        - 개발자가 관리할 영역(x)  
+    - Exception
+        - 구현한 로직의 문제점을 체크
+        - 개발자가 꼭 핸들링 해야 되는 영역
+        - CheckedException
+            - 예외처리를 강제하고 있음
+            - 처리하지 않으면 컴파일오류
+            - method signature -> throw Exception (안좋은습관)
+        - UncheckedException
+            - Runtime에 확인되는 오류
+            - RuntimeException
+        -> 한 때 논란 : 통일 UncheckedException -> RuntimeException
+              
+* try - catch - finally
+
+```java
+class Test {
+    public void test() {
+        try {
+            doSomething();
+        } catch (TypeConstraintException e1) {
+            doExceptionSomething();
+        } catch (NullPointerException e2) {
+            doExceptionSomething();
+        }
+    }
+}
+```
+
+```java
+class Test {
+    public void test() {
+        try {
+            doSomething();
+        } catch (TypeConstraintException | NullPointerException e) {
+            doExceptionSomething();
+        }
+    }
+}
+```
+
+```java
+import java.io.BufferedInputStream;
+
+class Test {
+    public void test() {
+        try (BufferedInputStream bis = new BufferedInputStream()) {
+            // ...
+        }
+    }
+}
+```
+
+* AOP
+    * Aspect-Oriented Programming
+    * 관점지향 프로그래밍
+ 관점(관심)   
+----------|-------
+   -> User|Service ->
+----------|-------
+    -> Ord|erService ->
+----------|--------
+    -> Pay|mentService ->
+----------|--------
+          |
+      
+* AOP를 사용하는 것 
+    * 로그.. ??
+    
+* AOP를 사용했을 때 장점
+    * 어플리케이션 전체에 흩어진 공통 기능을 하나의 로직으로 관리 
+    * 각 로직들은 자신의 로직에 충실하면 됨 (SRP)
+    
+* AOP 용어
+    * Target : 해당 기능을 적용할 대상 클래스를 의미함
+    * Aspect : 해당 로직의 관심밖에 있는 어떠한 기능을 추가로 제공함
+    * Advice : Aspect의 기능 구현체, 언제/무엇을 할지 결정
+    * Pointcut : 적용될 타겟의 어떤 위치(?)
+    * JoinPoint : advice가 실행되는 위치 

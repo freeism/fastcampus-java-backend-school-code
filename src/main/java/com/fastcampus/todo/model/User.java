@@ -3,6 +3,7 @@ package com.fastcampus.todo.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,8 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Where;
 
 /**
  * @author Martin
@@ -25,6 +28,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Where(clause = "deleted = false")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)     // auto increment
@@ -36,9 +40,15 @@ public class User {
     @NonNull
     @Column(name = "email")
     private String email;
-    private String address;
+//    private String address;
     private String password;
     private String bloodType;
+
+    @Embedded
+    private Address address;
+
+    @ColumnDefault("false")
+    private boolean deleted;    // primitive, 기본값 : false
 
 //    @OneToOne
 //    @OneToMany

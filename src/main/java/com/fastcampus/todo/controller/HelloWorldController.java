@@ -18,5 +18,10 @@ public class HelloWorldController {
     public String helloWorld() {
         return "hello-world";
     }
+
+    @GetMapping("/hello-exception")
+    public String helloException() {
+        throw new RuntimeException("hello-exception");
+    }
 }
 
