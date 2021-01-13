@@ -32,8 +32,12 @@ public class UserController {
 
     @GetMapping("/api/user/{id}")
     public User getUser(@PathVariable Long id) {
-        return userRepository.findById(id)
+        User user = userRepository.findById(id)
             .orElse(User.emptyObject());
+
+//        user.setTodo(Hibernate.unproxy(user.getTodo(), Todo.class));
+
+        return user;
     }
 
     // /api/user/martin@fastcampus.com/A/서울시%20성동구

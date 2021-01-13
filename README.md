@@ -218,3 +218,26 @@ class Test {
     * Advice : Aspect의 기능 구현체, 언제/무엇을 할지 결정
     * Pointcut : 적용될 타겟의 어떤 위치(?)
     * JoinPoint : advice가 실행되는 위치 
+
+* 단위테스트 = (A + B + C)
+
+* Transaction 끝나고 나면 -> Lazy fetch가 불가능함 (그렇게 만들어놓은것)
+* Transaction 끝나면 -> persistence-context (session 종료, db connection 반납된 상태)
+    -> lazy fetch (불가능) 
+
+* 배치 : 데이터를 대용량으로 처리하는 것들 
+    * ETL : extract(추출) / transformation(변환) / Load(적재)
+    * Reader - Processor - Writer
+    * 필요성
+        * 실시간 -> fast (뒷단의 로직은 lead time이 김)
+        * 필수적인것만 실시간으로 처리 / 나머지 배치
+    * 트렌드 : 약간 사양세... (현재는 엄청 쓰고 있음)
+        * Kafka - Event Stream 방식 (Event Driven)
+        * Async 방식의 처리에 약간씩 밀리고 있음
+        * Spring Cloud (pivotal 밀고있음)
+            * spring-batch -> stream 변경되고 있음
+    * 주기적으로 실행할 수 있는 방법
+        * crontab 
+        * quartz <- (시계)
+        * jenkins (hudson)
+            * spring-batch

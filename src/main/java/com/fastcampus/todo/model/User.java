@@ -1,6 +1,5 @@
 package com.fastcampus.todo.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -57,8 +56,14 @@ public class User {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, orphanRemoval = true)   // 컬럼명: todo_id
     @ToString.Exclude
-    @JsonIgnore
+//    @JsonIgnore
     private Todo todo;      // inner join User x Todo
+
+    // lazyinit -> 필요한시점에 init
+    // Todo.class -> HibernateProxy<Todo> : Optional<Todo>
+
+    // json -> object : json deserialize
+    // object -> json : json serialize
 
     public static User emptyObject() {
         return new User();
