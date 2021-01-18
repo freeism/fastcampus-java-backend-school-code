@@ -1,6 +1,7 @@
 package com.fastcampus.todo.service;
 
 import com.fastcampus.todo.aop.CustomLog;
+import com.fastcampus.todo.dto.UserDto;
 import com.fastcampus.todo.exception.EmailRequiredException;
 import com.fastcampus.todo.model.User;
 import com.fastcampus.todo.repository.TodoRepository;
@@ -46,10 +47,19 @@ public class UserService {  // <- class name : 명사
         user.setBloodType("A");
 
         userRepository.save(user);
+        // -> user history message producing ()
     }
 
     @Transactional
     public void removeUser(Long userId) {
         userRepository.deleteById(userId);
+    }
+
+    @Transactional
+    public void addUser(UserDto userDto) {
+        userRepository.save(User.of(userDto));
+
+        List<User> users = userRepository.findAll();
+        System.out.println("user added : " + users.get(users.size() - 1));
     }
 }

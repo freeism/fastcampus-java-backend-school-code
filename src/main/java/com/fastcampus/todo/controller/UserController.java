@@ -9,6 +9,7 @@ import com.fastcampus.todo.repository.UserRepository;
 import com.fastcampus.todo.service.UserService;
 import java.util.List;
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,7 +44,7 @@ public class UserController {
     // /api/user/martin@fastcampus.com/A/서울시%20성동구
     // /api/user/martin@fastcampus.com//서울시%20성동구
     @GetMapping("/api/user")        // localhost:8070/api/user?email=martin@fastcampus.com
-    public List<User> getUserByEmail(@RequestParam String email) {
+    public List<User> getUserByEmail(@RequestParam @NotEmpty String email) {
         return userService.getUsersByEmail(email);
     }
 

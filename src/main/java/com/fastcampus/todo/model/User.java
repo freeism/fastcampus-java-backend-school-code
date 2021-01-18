@@ -1,5 +1,6 @@
 package com.fastcampus.todo.model;
 
+import com.fastcampus.todo.dto.UserDto;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -67,5 +68,15 @@ public class User {
 
     public static User emptyObject() {
         return new User();
+    }
+
+    public static User of(UserDto userDto) {
+        User user = new User();
+        user.setName(userDto.getName());
+        user.setAddress(new Address(userDto.getCity(), userDto.getProvince()));
+        user.setEmail(userDto.getEmail());
+        user.setPassword(userDto.getPassword());
+
+        return user;
     }
 }
